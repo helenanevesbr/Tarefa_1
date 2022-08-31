@@ -1,0 +1,66 @@
+<html>
+    <head></head>
+    <body>
+        <h1>Conversor de Medidas</h1>
+        <button id="revert">Reverter</button>
+        <br/>
+        <br/>
+
+        <form id="decimal-to-roman" class="convertion-method" method="POST">
+            <label>Decimal para Romano</label>
+            <br/>
+            <input type="number" name="decimal" value="<%= decimal %>" placeholder="digite um numero decimal"/> 
+            <input type="hidden" name="type" value="decimal-to-roman" />
+            <input type="submit" value="Converter !" >
+            <p id="result">
+                <%= roman %>
+            </p>
+            <% if(error) {%>
+                <p id="error"><%= error %></p>
+            <% } %>
+        </form>
+
+        <form id="roman-to-decimal" class="convertion-method" method="POST">
+            <label>Romano para Decimal</label>
+            <br/>
+            <input type="text" name="roman" value="<%= roman %>" placeholder="digite um numero romano"/> 
+            <input type="hidden" name="type" value="roman-to-decimal" />
+            <input type="submit" value="Converter!" >
+            <p id="result">
+                <%= decimal %>
+            </p>
+            <% if(error) {%>
+                <p id="error"><%= error %></p>
+            <% } %>
+        </form>
+
+        <script>
+            let activeConversion = "<%= type %>";
+
+            function selectConversion(conversionName) {
+
+                const elements = document.querySelectorAll(".convertion-method")
+                for (i = 0; i < elements.length; ++i) {
+                    elements[i].style.display = "None"; 
+                }
+                
+                document.querySelector(`#${conversionName}`).style.display = "Block"; 
+            }
+
+            selectConversion(activeConversion)
+
+            const revertButton = document.querySelector("#revert")
+            revertButton.addEventListener("click", () => {
+                if (activeConversion === "roman-to-decimal") {
+                    activeConversion = "decimal-to-roman"
+                } else {
+                    activeConversion = "roman-to-decimal"
+                }
+
+                selectConversion(activeConversion)
+            });
+
+            // <% if(type === "decimal-to-roman") {} %> 
+        </script>
+    </body>
+</html>
